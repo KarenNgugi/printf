@@ -1,23 +1,6 @@
 #include "main.h"
 
 /**
- * putchar_unum - print the unsigned number
- * @number: number to print
- * @base: base of number to print (e.g., decimal, hexadecimal, octal)
- * @buffer: number buffer
- * @flag: if 1, print hexadecimal numbers in uppercase, otherwise lowercase
- */
-void putchar_unum(unsigned long number, int base, char *buffer, int flag)
-{
-	if (number < 0)
-	{
-		*buffer++ = '-';
-		number = -number;
-		putchar_num(number, base, buffer, flag);
-	}
-}
-
-/**
  * _print_by_base - print number based on base
  * @format: string to print
  * @args: list of arguments to print
@@ -32,10 +15,10 @@ void _print_by_base(const char *format, va_list args)
 	switch (*format)
 	{
 		case 'u':
-			print_unsigned(va_arg(args, unsigned int), 10, num_buf, 0);
+			print_unsigned(va_arg(args, int), 10, num_buf, 0);
 			break;
 		case 'x':
-			print_unsigned(va_arg(args, int) 16, num_buf, 0);
+			print_unsigned(va_arg(args, int), 16, num_buf, 0);
 			break;
 		case 'X':
 			print_unsigned(va_arg(args, int), 16, num_buf, 1);
