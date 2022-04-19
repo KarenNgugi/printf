@@ -13,12 +13,6 @@ void putchar_num(long number, int base, char *buffer, int flag)
 	char buf[65];
 	int i, cur = 0, digit;
 
-	if (number < 0)
-	{
-		*buffer++ = '-';
-		number = -number;
-	}
-
 	if (number == 0)
 	{
 		*buffer++ = '0';
