@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdint.h>
-#include <limits.h>
+#include "main.h"
 
 /**
  * putchar_num - prints number
@@ -15,12 +12,6 @@ void putchar_num(long number, int base, char *buffer, int flag)
 {
 	char buf[65];
 	int i, cur = 0, digit;
-
-	if (number < 0)
-	{
-		*buffer++ = '-';
-		number = -number;
-	}
 
 	if (number == 0)
 	{
@@ -95,10 +86,7 @@ void print_unsigned(unsigned int u, int base, char *buffer, int flag)
  */
 int _vprintf(const char *format, va_list args)
 {
-	unsigned int state = 0, i, count = 0, u;
-	void *p;
-	const char *s;
-	char num_buf[65];
+	unsigned int state = 0, count = 0;
 
 	while (*format)
 	{
@@ -117,52 +105,8 @@ int _vprintf(const char *format, va_list args)
 		}
 		else if (state == 1)
 		{
-		switch (*format)
-		{
-			case 'c':
-				putchar(va_arg(args, int));
-				break;
-			case 's':
-				s = va_arg(args, const char *);
-				while (*s)
-					putchar(*s++);
-				break;
-			case 'i':
-			case 'd':
-				putchar_int(va_arg(args, int));
-				break;
-			case 'u':
-				u = va_arg(args, int);
-				print_unsigned(u, 10, num_buf, 0);
-				break;
-			case 'x':
-				u = va_arg(args, int);
-				print_unsigned(u, 16, num_buf, 0);
-				break;
-			case 'X':
-				u = va_arg(args, int);
-				print_unsigned(u, 16, num_buf, 1);
-				break;
-			case 'o':
-				u = va_arg(args, int);
-				print_unsigned(u, 8, num_buf, 0);
-				break;
-			case 'p':
-				putchar('0');
-				putchar('x');
-				p = va_arg(args, void *);
-				putchar_num((uint64_t) p, 16, num_buf, 0);
-				for (i = 0; num_buf[i]; i++)
-					putchar(num_buf[i]);
-				break;
-			case '%':
-				putchar('%');
-				break;
-			default:
-				putchar('%');
-				putchar(*format);
-		}
-		state = 0;
+			_vprintf_state_1(format, args);
+			state = 0;
 		}
 		format++;
 	}
